@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 
 import Header from "./components/Header";
+import MovieScreen from "./components/MovieScreen";
 
 function App() {
   const [movieList, setMovieList] = useState([]);
@@ -21,9 +22,17 @@ function App() {
   }, [page]);
 
   return (
-    <div className="App">
+    <React.Fragment className="App">
       <Header />
-    </div>
+      <main>
+        <MovieScreen 
+        movieList={movieList}
+        watchList={watchList}
+        page={page}
+        setPage={setPage}
+        />
+      </main>
+    </React.Fragment>
   );
 };
 
