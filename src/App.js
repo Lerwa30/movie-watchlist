@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 
 import Header from "./components/Header";
 import MovieScreen from "./components/MovieScreen";
+import Watchlist from "./components/Watchlist";
+import './App.css'
 
 function App() {
   const [movieList, setMovieList] = useState([]);
@@ -31,6 +33,7 @@ function App() {
         page={page}
         setPage={setPage}
         />
+        <Watchlist watchList={watchList}/>
       </main>
     </React.Fragment>
   );
