@@ -11,6 +11,10 @@ function App() {
   const [watchList, setWatchList] = useState([]);
   const [page, setPage] = useState(1);
 
+  const addMovie = (movie) => {
+    return setMovieList([...movieList, movie]);
+  };
+
   const getData = () => {
     axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${page}`)
     .then((res) => {
@@ -32,6 +36,7 @@ function App() {
         watchList={watchList}
         page={page}
         setPage={setPage}
+        addMovie={addMovie}
         />
         <Watchlist watchList={watchList}/>
       </main>
