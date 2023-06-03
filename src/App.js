@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
 import MovieScreen from "./components/MovieScreen";
 import Watchlist from "./components/Watchlist";
-import './App.css'
+import "./App.css";
 
 function App() {
   const [movieList, setMovieList] = useState([]);
@@ -12,15 +12,24 @@ function App() {
   const [page, setPage] = useState(1);
 
   const addMovie = (movie) => {
-    return setMovieList([...movieList, movie]);
+    return setWatchList([...watchList, movie]);
+  };
+
+  const removeMovie = (movie) => {
+    const newState = watchList.filter((item) => {
+      return item !== movie;
+    });
+    setWatchList(newState);
   };
 
   const getData = () => {
-    axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${page}`)
-    .then((res) => {
-      console.log(res.data.results)
-      setMovieList(res.data.results)
-    });
+    axios
+      .get(
+        `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${page}`
+      )
+      .then((res) => {
+        setMovieList(res.data.results);
+      });
   };
 
   useEffect(() => {
@@ -28,20 +37,21 @@ function App() {
   }, [page]);
 
   return (
-    <React.Fragment className="App">
+    <div className="App">
       <Header />
       <main>
-        <MovieScreen 
-        movieList={movieList}
-        watchList={watchList}
-        page={page}
-        setPage={setPage}
-        addMovie={addMovie}
+        <MovieScreen
+          movieList={movieList}
+          watchList={watchList}
+          page={page}
+          setPage={setPage}
+          addMovie={addMovie}
+          removeMovie={removeMovie}
         />
-        <Watchlist watchList={watchList}/>
+        <Watchlist watchList={watchList} removeMovie={removeMovie} />
       </main>
-    </React.Fragment>
+    </div>
   );
-};
+}
 
 export default App;
